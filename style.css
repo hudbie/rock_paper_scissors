@@ -41,31 +41,33 @@ h1 {
 .score {
     font-size: 1.2rem;
     font-weight: bold;
+    color: #555;
 }
 
 .choices {
     display: flex;
-    gap: 1rem;
     justify-content: center;
+    gap: 1rem;
     margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 
 .choice-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
     padding: 1rem 1.5rem;
     font-size: 1.1rem;
-    border: none;
-    border-radius: 10px;
-    background: #007bff;
-    color: white;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
     min-width: 120px;
 }
 
 .choice-btn:hover {
-    background: #0056b3;
+    background: #45a049;
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .choice-btn:active {
@@ -75,39 +77,35 @@ h1 {
 .result {
     margin-bottom: 1.5rem;
     padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 10px;
-    min-height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background: #e9ecef;
+    border-radius: 8px;
 }
 
-#round-result {
+#result-text {
     font-size: 1.3rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
     color: #333;
 }
 
-#choices-display {
+#choices-text {
     font-size: 1.1rem;
     color: #666;
 }
 
 #reset-btn {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    background: #dc3545;
+    background: #ff6b6b;
     color: white;
     border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
 #reset-btn:hover {
-    background: #c82333;
+    background: #ff5252;
 }
 
 .win {
