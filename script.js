@@ -10,25 +10,24 @@ class RockPaperScissors {
     initializeGame() {
         this.playerScoreElement = document.getElementById('player-score');
         this.computerScoreElement = document.getElementById('computer-score');
-        this.roundResultElement = document.getElementById('round-result');
-        this.choicesDisplayElement = document.getElementById('choices-display');
-        this.resetButton = document.getElementById('reset-btn');
-
+        this.resultTextElement = document.getElementById('result-text');
+        this.choicesTextElement = document.getElementById('choices-text');
+        
         this.setupEventListeners();
-        this.updateScoreDisplay();
+        this.updateScoreboard();
     }
 
     setupEventListeners() {
-        const choiceButtons = document.querySelectorAll('.choice-btn');
-        
-        choiceButtons.forEach(button => {
+        // Choice buttons
+        document.querySelectorAll('.choice-btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 const playerChoice = e.target.dataset.choice;
                 this.playRound(playerChoice);
             });
         });
 
-        this.resetButton.addEventListener('click', () => {
+        // Reset button
+        document.getElementById('reset-btn').addEventListener('click', () => {
             this.resetGame();
         });
     }
@@ -44,9 +43,9 @@ class RockPaperScissors {
         }
 
         const winConditions = {
-            rock: 'scissors',
-            paper: 'rock',
-            scissors: 'paper'
+            'rock': 'scissors',
+            'paper': 'rock',
+            'scissors': 'paper'
         };
 
         return winConditions[playerChoice] === computerChoice ? 'player' : 'computer';
@@ -56,51 +55,48 @@ class RockPaperScissors {
         const computerChoice = this.getComputerChoice();
         const winner = this.determineWinner(playerChoice, computerChoice);
 
-        this.updateRoundResult(playerChoice, computerChoice, winner);
-        this.updateScore(winner);
-        this.updateScoreDisplay();
+        this.displayChoices(playerChoice, computerChoice);
+        this.updateGame(winner);
     }
 
-    updateRoundResult(playerChoice, computerChoice, winner) {
-        const playerEmoji = this.getEmoji(playerChoice);
-        const computerEmoji = this.getEmoji(computerChoice);
+    displayChoices(playerChoice, computerChoice) {
+        const choiceEmojis = {
+            'rock': '🪨',
+            'paper': '📄',
+            'scissors': '✂️'
+        };
 
-        this.choicesDisplayElement.textContent = 
-            `You chose ${playerEmoji} | Computer chose ${computerEmoji}`;
+        this.choicesTextElement.textContent = 
+            `You chose ${choiceEmojis[playerChoice]} ${playerChoice} | Computer chose ${choiceEmojis[computerChoice]} ${computerChoice}`;
+    }
+
+    updateGame(winner) {
+        let resultMessage = '';
+        let resultClass = '';
 
         switch (winner) {
             case 'player':
-                this.roundResultElement.textContent = 'You win this round! 🎉';
-                this.roundResultElement.className = 'win';
+                this.playerScore++;
+                resultMessage = '🎉 You win this round!';
+                resultClass = 'win';
                 break;
             case 'computer':
-                this.roundResultElement.textContent = 'Computer wins this round! 🤖';
-                this.roundResultElement.className = 'lose';
+                this.computerScore++;
+                resultMessage = '😞 Computer wins this round!';
+                resultClass = 'lose';
                 break;
-            default:
-                this.roundResultElement.textContent = "It's a tie! 😐";
-                this.roundResultElement.className = 'tie';
+            case 'tie':
+                resultMessage = '🤝 It\'s a tie!';
+                resultClass = 'tie';
+                break;
         }
+
+        this.resultTextElement.textContent = resultMessage;
+        this.resultTextElement.className = resultClass;
+        this.updateScoreboard();
     }
 
-    getEmoji(choice) {
-        const emojis = {
-            rock: '✊',
-            paper: '✋',
-            scissors: '✌️'
-        };
-        return emojis[choice];
-    }
-
-    updateScore(winner) {
-        if (winner === 'player') {
-            this.playerScore++;
-        } else if (winner === 'computer') {
-            this.computerScore++;
-        }
-    }
-
-    updateScoreDisplay() {
+    updateScoreboard() {
         this.playerScoreElement.textContent = this.playerScore;
         this.computerScoreElement.textContent = this.computerScore;
     }
@@ -108,11 +104,10 @@ class RockPaperScissors {
     resetGame() {
         this.playerScore = 0;
         this.computerScore = 0;
-        this.updateScoreDisplay();
-        
-        this.roundResultElement.textContent = 'Make your choice!';
-        this.roundResultElement.className = '';
-        this.choicesDisplayElement.textContent = '';
+        this.resultTextElement.textContent = 'Choose your weapon!';
+        this.choicesTextElement.textContent = '';
+        this.resultTextElement.className = '';
+        this.updateScoreboard();
     }
 }
 
